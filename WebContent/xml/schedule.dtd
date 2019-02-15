@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT schedulelist (schedule)*>
+    <!ELEMENT schedule (id,seq,subject,content,startdate,enddate,participant?,kind)>
+        <!ELEMENT id (#PCDATA)>
+        <!ELEMENT seq (#PCDATA)>
+        <!ELEMENT subject (#PCDATA)>
+        <!ELEMENT content (#PCDATA)>
+        <!ELEMENT startdate (#PCDATA)>
+        <!ELEMENT enddate (#PCDATA)>
+        <!ELEMENT participant (#PCDATA)>
+        <!ELEMENT kind (#PCDATA)>

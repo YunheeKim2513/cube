@@ -1,0 +1,28 @@
+.a:link    {color:#186496;text-decoration:none}
+.a:visited {color:#186496;text-decoration:none}
+.a:active  {color:#646464;text-decoration:none}
+.a:hover  {color:#186496;text-decoration:none}
+
+.a1:link    {color:#666666;text-decoration:none}
+.a1:visited {color:#666666;text-decoration:none}
+.a1:active  {color:#1F8BAE;text-decoration:none}
+.a1:hover  {color:#1F8BAE;text-decoration:none}
+
+.input {
+	font-family: "µ¸¿ò", "±¼¸²";
+	font-size: 12px;
+	color: #666666;
+	border: 1px solid #BEBEBE;
+}
+.type {
+	font-family: "µ¸¿ò", "±¼¸²";
+	font-size: 12px;
+	line-height: 16px;
+	color: #333333;
+}
+.type2 {
+	font-family: "µ¸¿ò", "±¼¸²";
+	font-size: 12px;
+	line-height: 16px;
+	color: #666666;
+}

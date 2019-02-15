@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT vacationlist (vacation)*>
+    <!ELEMENT vacation (employeeid,employeename,departmentname,gradename,startdate,enddate)>
+        <!ELEMENT employeeid (#PCDATA)>
+        <!ELEMENT employeename (#PCDATA)>
+        <!ELEMENT departmentname (#PCDATA)>
+        <!ELEMENT gradename (#PCDATA)>
+        <!ELEMENT startdate (#PCDATA)>
+        <!ELEMENT enddate (#PCDATA)>

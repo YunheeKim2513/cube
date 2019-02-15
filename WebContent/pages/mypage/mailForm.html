@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=IE9" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>연봉 계산기 | 실수령액 계산기</title>
+	<meta name="Keywords" content="연봉 계산기,연봉 실수령액 계산기,실수령액 계산기,연봉 1억 실수령액,국민연금,건강보험,장기요양,고용보험,4대보험,소득세,주민세,공제액">
+	<meta name="Description" content="연봉 계산기는 4대보험과 세금을 제외한 월 실수령액을 계산해볼 수 있습니다. (모바일 지원 연봉계산기, 연봉 실수령액 계산, 4대보험 계산, 연봉 비교)">
+	<style>
+	body {margin:2px 2px 2px 2px; font-family: "Nanum Gothic", Gulim, Tahoma, sans-serif;}
+	a { text-decoration:none; }
+	.money {TEXT-ALIGN: right};
+
+
+	.b_head { margin:10px; }
+	.b_head A { line-height:2; font-size:larger; }
+	.b_head A:visited { color: blue; }
+
+	.b_head_sub { margin:0px 0px 5px 20px; }
+	.b_head_sub A { line-height:1.4; }
+	.b_head_sub A:visited { color: blue; }
+
+			#b_main { float:left; width:600px;}
+		.b_main { float:left; width:600px;}
+	
+	#b_right { float:left; margin-left: 25px; width: 260px; }
+	.b_right { float:left; margin-left: 25px; width: 260px; }
+
+	.b_tail { text-align: center; height: 40px; padding-top: 20px; font-size: smaller; line-height: 1.4;}
+
+	.form_quick_input { cursor: pointer; font-size: smaller; padding: 5px; white-space:nowrap; border: 1px solid #e0e0e0; }
+
+	.content_desc { font-size: smaller; line-height:1.4; }
+</style>
+
+
+</head>
+<body>
+
+
+
+
+
+<div class="b_head_sub">
+	<a href="/salary/"  style="font-weight:bold">연봉 계산기</a>
+	&nbsp; | &nbsp; <a href="/salary/table/" >연봉 실수령액 표</a>
+	&nbsp; | &nbsp; <a href="/salary/tablem/" >월급 실수령액 표</a>
+</div>
+
+<div id="b_main" class="b_main">
+
+	<table width=100% cellpadding=0 cellspacing=3 bgcolor=#DBDBDB>
+	  <tr>
+		<td bgcolor=#FFFFFF>
+			<table width=100% cellpadding=10 cellspacing=0 border=0>
+			  <tr>
+				<td>☞ 내 연봉에서 4대보험과 세금을 제외한 실수령액을 계산합니다.</td>
+			  </tr>
+			</table>
+		</td>
+	  </tr>
+	</table>
+
+	<img width=0 height=10><br>
+
+	<form name=form method=get action="/bank/salary_calc.php" style="margin:0px">
+		<table width=100% cellspacing=1 cellpadding=3 bgcolor=#707070>
+		<tr>
+			<td bgcolor=#E7E7E7 nowrap>급여선택</td>
+			<td bgcolor=#FFFFFF style="line-height: 1.6">
+				<input type=radio name=mtype value="Y" id="mtype_Y" checked><label for="mtype_Y">연봉(퇴직금 별도)</label><br>
+				<!-- <input type=radio name=mtype value="I" id="mtype_I"><label for="mtype_I">연봉(퇴직금 포함)</label><br> -->
+				<input type=radio name=mtype value="M" id="mtype_M"><label for="mtype_M">월급</label>
+			</td>
+		</tr>
+		<tr>
+			<td width=25% bgcolor=#E7E7E7>연봉/월급</td>
+			<td bgcolor=#FFFFFF><input type=number name=money class=money min=1 size=12 maxlength=20 value="" onKeyUp="JavaScript:numberComma(this);">원<br>
+			<div id=money_view>&nbsp;</div>
+			<div style="padding:2px; line-height:2">
+			<span class="form_quick_input" onClick="JavaScript:moneyCalc(100000);">십만원</span> <span class="form_quick_input" onClick="JavaScript:moneyCalc(1000000);">백만원</span> <span class="form_quick_input" onClick="JavaScript:moneyCalc(10000000);">천만원</span> <span class="form_quick_input" onClick="JavaScript:moneyCalc(100000000);">일억원</span> 			</div></td>
+		</tr>
+		</table>
+
+
+				<div style="line-height: 2.5; padding: 5px; text-align: center;" id="option_table_button"><span class="form_quick_input" onClick="JavaScript:document.getElementById('option_table_button').style.display='none'; document.getElementById('option_table').style.display='';">추가 항목 입력 (비과세액, 부양가족수)</span></div>
+		
+
+		<table width=100% cellspacing=1 cellpadding=3 bgcolor=#707070 id="option_table" style="display:none">
+		<tr>
+			<td bgcolor=#E7E7E7>부양가족수</td>
+			<td bgcolor=#FFFFFF><input type=number name=family class=money min=1 max=100 size=3 maxlength=3 value="1">명 (본인,자녀포함)<br>
+			<div style="padding:2px; line-height:2">
+			<span class="form_quick_input" onClick="document.form.family.value='1'">1명</span> <span class="form_quick_input" onClick="document.form.family.value='2'">2명</span> <span class="form_quick_input" onClick="document.form.family.value='3'">3명</span> <span class="form_quick_input" onClick="document.form.family.value='4'">4명</span> <span class="form_quick_input" onClick="document.form.family.value='5'">5명</span> 			</div></td>
+		</tr>
+		<tr>
+			<td bgcolor=#E7E7E7>20세이하 자녀수</td>
+			<td bgcolor=#FFFFFF><input type=number name=family20 class=money min=0 max=100 size=3 maxlength=3 value="0">명<br>
+			<div style="padding:2px; line-height:2">
+			<span class="form_quick_input" onClick="document.form.family20.value='0'">0명</span> <span class="form_quick_input" onClick="document.form.family20.value='1'">1명</span> <span class="form_quick_input" onClick="document.form.family20.value='2'">2명</span> <span class="form_quick_input" onClick="document.form.family20.value='3'">3명</span> <span class="form_quick_input" onClick="document.form.family20.value='4'">4명</span> 			</div></td>
+		</tr>
+		<tr>
+			<td bgcolor=#E7E7E7 width=25% nowrap>비과세액</td>
+			<td bgcolor=#FFFFFF><input type=number name=tax_free class=money min=0 size=8 maxlength=20 value="100000">원 (기본 식대 10만원)</td>
+		</tr>
+		</table>
+
+		<div style="margin:5px 0px 5px 0px">
+			<div style="float: left;">
+				<input type=submit value="계산하기" onClick="JavaScript:return formSubmit();">
+				<input type=button value="다시작성" onClick="JavaScript:if (confirm('내용을 지우고 다시 작성하시겠습니까?')) { formReset(); }">
+			</div>
+			
+<div style="float: right; margin:0px 2px 5px 5px;">
+	<!--<span style="height:26px; vertical-align:top; margin-top:3px;">공유:</span>-->
+
+
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fbest79.com%2Fsalary%2F&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=676641839050591"
+            scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 155px; height:21px;"
+            allowTransparency="true"></iframe>
+    <iframe allowtransparency="true" frameborder="0" scrolling="no"
+            src="https://platform.twitter.com/widgets/tweet_button.html"
+            style="width:84px; height:20px;"></iframe>
+    	<img src="/sns/kakao.png" width="26" height="26" border="0" title="카카오톡 보내기" alt="카카오톡 보내기" style="cursor:pointer" onClick="JavaScript:_gaq.push(['_trackEvent', 'SNS', 'kakao_pc', 'salary.html']); alert('카카오톡 보내기는 스마트폰으로 접속하셔야 사용할 수 있습니다.');">
+	
+    
+
+
+
+</div>
+<div style="clear:both;"></div>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&appId=676641839050591&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>		</div>
+
+		<div style="text-align: center; margin: 10px 0px 10px 0px;"></div>
+
+		<table width=100% cellspacing=0 cellpadding=0>
+		<tr>
+			<td class="content_desc">
+						※ 계산 근거 자료<br>
+			&nbsp; 국민연금 - <a href="http://blog.best79.com/20" target="_blank"><b>2015년 7월</b> 기준소득월액 상한액 변경분 반영</a><br>
+			&nbsp; 건강보험 - <a href="http://blog.best79.com/23" target="_blank"><b>2016년 1월</b>부터 6.07% -> 6.12% 인상</a><br>
+			&nbsp; 고용보험 - 2013년 7월부터 0.65% 변경분 반영<br>
+			&nbsp; 소 득 세 - <a href="http://blog.best79.com/21" target="_blank"><b>2015년 7월</b> 개정된 근로소득 간이세액표 반영</a><br>
+			<br>
+			※ 오차 가능성 안내<br>
+			&nbsp; 실제 지급 조건, 과거 소득, 비과세액 등에 따라 약간의 차이가 있을 수 있습니다.<br>
+			</td>
+		</tr>
+		</table>
+
+	</form>
+
+	<br>
+
+	
+</div>
+
+<div id="b_right" class="b_right">
+		
+	<br>
+
+	<div>☞ <a href="/xe/free"><b>자유게시판</b></a></div>
+	<table width=100% border=0 cellspacing=0 cellpadding=3 bgcolor=#707070>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/free/6972" style="font-weight: bold">대환대출</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/free/6969" style="font-weight: bold">500-700정도</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/free/6887" >자동차대출</a>[3]</td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/free/6879" style="font-weight: bold">디딤돌 대출 문의</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/free/6851" style="font-weight: bold">대출전문가님 도와주세요</a></td>
+		 </tr>
+		</table>
+
+
+	<br>
+
+	<div>☞ <a href="/xe/loan"><b>대출 정보 공유</b></a></div>
+	<table width=100% border=0 cellspacing=0 cellpadding=3 bgcolor=#707070>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/loan/4724">안심전환대출 출시 - 약 2.65%</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/loan/4711">한국은행 기준금리 2% -&gt; 1.75...</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/loan/4054">근로복지공단 생활안정자금 대출 ...</a></td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/loan/3977">한국은행 기준금리 2.5% -&gt; 2....</a>[2]</td>
+		 </tr>
+			  <tr bgcolor=#FFFFFF style="font-size:smaller;">
+			<td>ㆍ<a href="/xe/loan/3794">주택기금포털 - 디딤돌 대출 (기...</a></td>
+		 </tr>
+		</table>
+
+	<br>
+
+
+
+	
+<br>
+
+<div>☞ 최근 계산</div>
+<table width=100% border=0 cellspacing=0 cellpadding=3 bgcolor=#707070>
+  <tr align=center bgcolor=#f2f2f2 style="font-size:smaller;">
+	<td>급여</td>
+	<td>금액</td>
+	<td nowrap>실수령액</td>
+	<td >가족</td>
+	<td>비과세</td>
+	<td>시간</td>
+  </tr>
+		  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/80000000">80,000,000</a></td>
+			<td nowrap>5,468,670</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">5분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/34500000">34,500,000</a></td>
+			<td nowrap>2,572,490</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">16분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/35000000">35,000,000</a></td>
+			<td nowrap>2,606,910</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">16분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/37000000">37,000,000</a></td>
+			<td nowrap>2,743,200</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/26000000">26,000,000</a></td>
+			<td nowrap>1,970,820</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/200000000">200,000,000</a></td>
+			<td nowrap>11,552,310</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/34000000">34,000,000</a></td>
+			<td nowrap>2,538,060</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/36000000">36,000,000</a></td>
+			<td nowrap>2,674,350</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/40000000">40,000,000</a></td>
+			<td nowrap>2,945,020</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/100000000">100,000,000</a></td>
+			<td nowrap>6,656,030</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/100000000/6/2/100000">100,000,000</a></td>
+			<td nowrap>7,034,860</td>
+			<td nowrap style="font-size: smaller">6/2</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/300000000">300,000,000</a></td>
+			<td nowrap>16,146,100</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/25000000">25,000,000</a></td>
+			<td nowrap>1,897,270</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>월</td>
+			<td><a href="/salary/M/5384600/4/2/300000">5,384,600</a></td>
+			<td nowrap>4,764,940</td>
+			<td nowrap style="font-size: smaller">4/2</td>
+			<td nowrap style="font-size: smaller">300,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/58000000">58,000,000</a></td>
+			<td nowrap>4,112,700</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/55000000">55,000,000</a></td>
+			<td nowrap>3,912,250</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/56000000">56,000,000</a></td>
+			<td nowrap>3,979,970</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/57000000">57,000,000</a></td>
+			<td nowrap>4,044,970</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">18분 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/57000000">57,000,000</a></td>
+			<td nowrap>4,044,970</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">1시간 전</td>
+		  </tr>
+			  <tr align=right bgcolor=#FFFFFF style="font-size:smaller;">
+			<td nowrap>연</td>
+			<td><a href="/salary/Y/56000000">56,000,000</a></td>
+			<td nowrap>3,979,970</td>
+			<td nowrap style="font-size: smaller">1/0</td>
+			<td nowrap style="font-size: smaller">100,000</td>
+			<td nowrap style="font-size: smaller">1시간 전</td>
+		  </tr>
+	</table>
+</div>
+
+<div style="clear:both;"></div>
+<div class="b_tail">
+	계산기는 자유롭게 사용하실 수 있습니다.<br>
+	<a href="http://blog.best79.com/" target="_blank">개발자 블로그</a> / 문의메일 : <a href="mailto:calc@best79.com">calc@best79.com</a><br>
+	Make 2007 - 2016<br>
+</div>
+
+
+<script language="JavaScript">
+<!--
+	function setCookie(c_name,value,exdays)
+	{
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+	}
+
+		
+//-->
+</script>
+
+</body>
+</html>

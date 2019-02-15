@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 테스트를 위한 log4sql core.log.jdbc.driver.OracleDriver -->
+<!-- 실제 실행에서는 오라클 jdbc로 변경해야된다. oracle.jdbc.driver.OracleDriver -->
+<Context>
+   <Resource name="jdbc/ncs_cubegroupware" auth="Container"
+      type="javax.sql.DataSource"
+      factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+      driverClassName="oracle.jdbc.driver.OracleDriver"
+      url="jdbc:oracle:thin:@183.101.196.135:1521:orcl" username="cube"
+      password="cube" maxActive="20" maxIdle="10" maxWait="-1"
+      removeAbandoned="true" removeAbandonedTimeout="60"
+      logAbandoned="true" />
+
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+</Context>

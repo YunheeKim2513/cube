@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT timelist (time)*>
+    <!ELEMENT time (intime?, outtime?, startdate, enddate)>
+        <!ELEMENT intime (#PCDATA)>
+        <!ELEMENT outtime (#PCDATA)>
+        <!ELEMENT startdate (#PCDATA)>
+        <!ELEMENT enddate (#PCDATA)>

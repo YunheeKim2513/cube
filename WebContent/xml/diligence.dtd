@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT diligencelist (diligence)* >
+    <!ELEMENT diligence (group_standard)>
+        <!ELEMENT group_standard (#PCDATA)>
+       
+     
